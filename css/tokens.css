@@ -1,0 +1,46 @@
+/* css/tokens.css — système visuel partagé (UI + éditeur de runes).
+   Direction : carnet de campagne en cuir sombre, vélin, dorure ; les runes sont des blocs émaillés.
+   Le jeu assume un seul thème sombre (choix délibéré) : couleurs explicites, color-scheme dark.
+   Polices (Google Fonts, chargées par index.html) :
+     IM Fell English SC (titres), Alegreya Sans (texte, chiffres tabulaires), Noto Sans Runic (glyphes). */
+:root {
+  color-scheme: dark;
+  /* Surfaces */
+  --ink: #120f0d;          /* fond le plus profond */
+  --leather: #221a16;      /* panneaux */
+  --leather-2: #2c221d;    /* panneaux surélevés */
+  --leather-3: #3a2d26;    /* survol, champs */
+  --line: #5b4636;         /* filets */
+  --line-soft: rgba(239, 228, 204, 0.12);
+  /* Texte */
+  --vellum: #efe4cc;       /* texte principal */
+  --vellum-dim: #cbbd9f;   /* texte secondaire */
+  --muted: #968672;        /* légendes */
+  /* Dorure (accent unique) */
+  --gilt: #d4a94f;
+  --gilt-bright: #f0cd7a;
+  --gilt-deep: #8c6a2a;
+  /* Familles de runes */
+  --rune-perc: #3c6cb2;  --rune-perc-hi: #6d9ae0;  --rune-perc-lo: #213f6e;
+  --rune-act:  #b9492b;  --rune-act-hi:  #e8774f;  --rune-act-lo:  #6e2715;
+  --rune-link: #348c78;  --rune-link-hi: #5ec7ad;  --rune-link-lo: #1b4d42;
+  --rune-param-bg: #efe4cc; --rune-param-fg: #241a14;
+  --rune-locked: #4a4038;
+  /* Camps */
+  --royaume: #4f7bd1;  --royaume-hi: #8fb0ef;
+  --gobelins: #c0532f; --gobelins-hi: #ee8a5f;
+  /* Sémantique */
+  --ok: #86b46e; --warn: #e2a83f; --bad: #d65a43;
+  /* Typo */
+  --font-display: 'IM Fell English SC', 'Cormorant SC', Georgia, 'Times New Roman', serif;
+  --font-body: 'Alegreya Sans', 'Segoe UI', Roboto, system-ui, sans-serif;
+  --font-rune: 'Noto Sans Runic', 'Segoe UI Historic', 'Segoe UI Symbol', serif;
+  --step--1: 0.8125rem; --step-0: 0.9375rem; --step-1: 1.125rem; --step-2: 1.4rem; --step-3: 1.9rem; --step-4: 2.8rem; --step-5: 4.2rem;
+  /* Forme */
+  --radius: 6px; --radius-lg: 12px;
+  --shadow: 0 12px 34px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --panel-border: 1px solid var(--line);
+  --focus: 0 0 0 2px var(--ink), 0 0 0 4px var(--gilt-bright);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+html, body { background: var(--ink); color: var(--vellum); }

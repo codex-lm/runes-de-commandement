@@ -1,0 +1,573 @@
+{
+  "version": 1,
+  "generator": "Blender 5.2.3",
+  "assets": {
+    "tile_plain_0": {
+      "file": "models/tile_plain_0.json",
+      "kind": "tile",
+      "tris": 5942,
+      "bytes": 343186,
+      "standHeight": 0,
+      "rim": -0.0025,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.8487
+      ],
+      "bboxMax": [
+        0.958,
+        0.129,
+        0.8487
+      ]
+    },
+    "tile_plain_1": {
+      "file": "models/tile_plain_1.json",
+      "kind": "tile",
+      "tris": 5980,
+      "bytes": 316410,
+      "standHeight": 0,
+      "rim": -0.0024,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.855
+      ],
+      "bboxMax": [
+        0.958,
+        0.1197,
+        0.849
+      ]
+    },
+    "tile_plain_2": {
+      "file": "models/tile_plain_2.json",
+      "kind": "tile",
+      "tris": 5978,
+      "bytes": 339018,
+      "standHeight": 0,
+      "rim": 0.0003,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.8512
+      ],
+      "bboxMax": [
+        0.958,
+        0.2394,
+        0.8487
+      ]
+    },
+    "tile_forest_0": {
+      "file": "models/tile_forest_0.json",
+      "kind": "tile",
+      "tris": 10635,
+      "bytes": 495898,
+      "standHeight": 0,
+      "rim": 0.0008,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.8487
+      ],
+      "bboxMax": [
+        0.958,
+        1.0559,
+        0.852
+      ]
+    },
+    "tile_forest_1": {
+      "file": "models/tile_forest_1.json",
+      "kind": "tile",
+      "tris": 11787,
+      "bytes": 476086,
+      "standHeight": 0,
+      "rim": -0.005,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.8487
+      ],
+      "bboxMax": [
+        0.958,
+        0.8477,
+        0.8598
+      ]
+    },
+    "tile_hill_0": {
+      "file": "models/tile_hill_0.json",
+      "kind": "tile",
+      "tris": 5873,
+      "bytes": 316418,
+      "standHeight": 0.28,
+      "rim": 0.0079,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.8487
+      ],
+      "bboxMax": [
+        0.958,
+        0.4198,
+        0.8487
+      ]
+    },
+    "tile_water_0": {
+      "file": "models/tile_water_0.json",
+      "kind": "tile",
+      "tris": 5358,
+      "bytes": 266994,
+      "standHeight": -0.07,
+      "rim": -0.18,
+      "bboxMin": [
+        -1,
+        -0.35,
+        -0.866
+      ],
+      "bboxMax": [
+        1,
+        0.235,
+        0.866
+      ]
+    },
+    "tile_ford_0": {
+      "file": "models/tile_ford_0.json",
+      "kind": "tile",
+      "tris": 5766,
+      "bytes": 290418,
+      "standHeight": -0.02,
+      "rim": -0.18,
+      "bboxMin": [
+        -1,
+        -0.35,
+        -0.866
+      ],
+      "bboxMax": [
+        1,
+        0.1401,
+        0.866
+      ]
+    },
+    "tile_ruins_0": {
+      "file": "models/tile_ruins_0.json",
+      "kind": "tile",
+      "tris": 5689,
+      "bytes": 322266,
+      "standHeight": 0.016,
+      "rim": 0.0006,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.8487
+      ],
+      "bboxMax": [
+        0.958,
+        0.5929,
+        0.8487
+      ]
+    },
+    "tile_rocks_0": {
+      "file": "models/tile_rocks_0.json",
+      "kind": "tile",
+      "tris": 5966,
+      "bytes": 354742,
+      "standHeight": 0,
+      "rim": -0.019,
+      "bboxMin": [
+        -0.958,
+        -0.35,
+        -0.8579
+      ],
+      "bboxMax": [
+        0.958,
+        0.86,
+        0.8487
+      ]
+    },
+    "k_pikemen": {
+      "file": "models/k_pikemen.json",
+      "kind": "unit",
+      "tris": 13980,
+      "bytes": 426262,
+      "height": 0.5606,
+      "portrait": "portraits/k_pikemen.webp",
+      "portraitBytes": 10610,
+      "nodes": [
+        "Flag"
+      ],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        0.6397,
+        0.6503
+      ]
+    },
+    "k_knights": {
+      "file": "models/k_knights.json",
+      "kind": "unit",
+      "tris": 13170,
+      "bytes": 419626,
+      "height": 0.7998,
+      "portrait": "portraits/k_knights.webp",
+      "portraitBytes": 8854,
+      "nodes": [
+        "Flag",
+        "Flag.001"
+      ],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        0.7998,
+        0.4629
+      ]
+    },
+    "k_archers": {
+      "file": "models/k_archers.json",
+      "kind": "unit",
+      "tris": 13796,
+      "bytes": 442890,
+      "height": 0.5626,
+      "portrait": "portraits/k_archers.webp",
+      "portraitBytes": 10070,
+      "nodes": [],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        0.6608,
+        0.4
+      ]
+    },
+    "k_mage": {
+      "file": "models/k_mage.json",
+      "kind": "unit",
+      "tris": 13891,
+      "bytes": 427986,
+      "height": 0.8623,
+      "portrait": "portraits/k_mage.webp",
+      "portraitBytes": 5818,
+      "nodes": [
+        "Glow"
+      ],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        0.8623,
+        0.4
+      ]
+    },
+    "k_golem": {
+      "file": "models/k_golem.json",
+      "kind": "unit",
+      "tris": 9595,
+      "bytes": 310598,
+      "height": 1.0368,
+      "portrait": "portraits/k_golem.webp",
+      "portraitBytes": 7122,
+      "nodes": [
+        "Glow"
+      ],
+      "bboxMin": [
+        -0.44,
+        0,
+        -0.44
+      ],
+      "bboxMax": [
+        0.44,
+        1.0368,
+        0.44
+      ]
+    },
+    "k_commander": {
+      "file": "models/k_commander.json",
+      "kind": "unit",
+      "tris": 12078,
+      "bytes": 362146,
+      "height": 1.1413,
+      "portrait": "portraits/k_commander.webp",
+      "portraitBytes": 5846,
+      "nodes": [
+        "Flag"
+      ],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        1.1413,
+        0.4
+      ]
+    },
+    "g_spears": {
+      "file": "models/g_spears.json",
+      "kind": "unit",
+      "tris": 13531,
+      "bytes": 439078,
+      "height": 0.7759,
+      "portrait": "portraits/g_spears.webp",
+      "portraitBytes": 7996,
+      "nodes": [],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4096,
+        0.7759,
+        0.5663
+      ]
+    },
+    "g_wolves": {
+      "file": "models/g_wolves.json",
+      "kind": "unit",
+      "tris": 13588,
+      "bytes": 468966,
+      "height": 0.7022,
+      "portrait": "portraits/g_wolves.webp",
+      "portraitBytes": 8270,
+      "nodes": [],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        0.7022,
+        0.4
+      ]
+    },
+    "g_archers": {
+      "file": "models/g_archers.json",
+      "kind": "unit",
+      "tris": 13609,
+      "bytes": 440306,
+      "height": 0.6391,
+      "portrait": "portraits/g_archers.webp",
+      "portraitBytes": 11150,
+      "nodes": [],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        0.6391,
+        0.4
+      ]
+    },
+    "g_shaman": {
+      "file": "models/g_shaman.json",
+      "kind": "unit",
+      "tris": 11508,
+      "bytes": 388466,
+      "height": 0.8253,
+      "portrait": "portraits/g_shaman.webp",
+      "portraitBytes": 7300,
+      "nodes": [
+        "Glow",
+        "Glow.001"
+      ],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        0.8253,
+        0.4
+      ]
+    },
+    "g_troll": {
+      "file": "models/g_troll.json",
+      "kind": "unit",
+      "tris": 11719,
+      "bytes": 382326,
+      "height": 0.9764,
+      "portrait": "portraits/g_troll.webp",
+      "portraitBytes": 5680,
+      "nodes": [],
+      "bboxMin": [
+        -0.44,
+        0,
+        -0.44
+      ],
+      "bboxMax": [
+        0.44,
+        0.9764,
+        0.44
+      ]
+    },
+    "g_warchief": {
+      "file": "models/g_warchief.json",
+      "kind": "unit",
+      "tris": 13894,
+      "bytes": 461542,
+      "height": 1.1399,
+      "portrait": "portraits/g_warchief.webp",
+      "portraitBytes": 5794,
+      "nodes": [
+        "Flag"
+      ],
+      "bboxMin": [
+        -0.4,
+        0,
+        -0.4
+      ],
+      "bboxMax": [
+        0.4,
+        1.1399,
+        0.4
+      ]
+    },
+    "prop_raven": {
+      "file": "models/prop_raven.json",
+      "kind": "prop",
+      "tris": 2822,
+      "bytes": 156694,
+      "nodes": [
+        "Body",
+        "Wing_L",
+        "Wing_R"
+      ],
+      "bboxMin": [
+        -0.18,
+        -0.0265,
+        -0.1201
+      ],
+      "bboxMax": [
+        0.18,
+        0.045,
+        0.1475
+      ]
+    },
+    "prop_arrow": {
+      "file": "models/prop_arrow.json",
+      "kind": "prop",
+      "tris": 354,
+      "bytes": 22790,
+      "nodes": [],
+      "bboxMin": [
+        -0.0229,
+        -0.0137,
+        -0.32
+      ],
+      "bboxMax": [
+        0.0229,
+        0.026,
+        0
+      ]
+    },
+    "deco_tree_0": {
+      "file": "models/deco_tree_0.json",
+      "kind": "prop",
+      "tris": 1300,
+      "bytes": 73594,
+      "nodes": [],
+      "bboxMin": [
+        -0.2142,
+        -0.0268,
+        -0.2075
+      ],
+      "bboxMax": [
+        0.2336,
+        1.1998,
+        0.2275
+      ]
+    },
+    "deco_tree_1": {
+      "file": "models/deco_tree_1.json",
+      "kind": "prop",
+      "tris": 2580,
+      "bytes": 98326,
+      "nodes": [],
+      "bboxMin": [
+        -0.296,
+        -0.024,
+        -0.297
+      ],
+      "bboxMax": [
+        0.3032,
+        1,
+        0.3032
+      ]
+    },
+    "deco_rock_0": {
+      "file": "models/deco_rock_0.json",
+      "kind": "prop",
+      "tris": 1438,
+      "bytes": 70218,
+      "nodes": [],
+      "bboxMin": [
+        -0.2774,
+        -0.0294,
+        -0.275
+      ],
+      "bboxMax": [
+        0.2855,
+        0.5,
+        0.2856
+      ]
+    },
+    "prop_tent_royaume": {
+      "file": "models/prop_tent_royaume.json",
+      "kind": "prop",
+      "tris": 2563,
+      "bytes": 174230,
+      "nodes": [
+        "Flag"
+      ],
+      "bboxMin": [
+        -0.4208,
+        -0.008,
+        -0.425
+      ],
+      "bboxMax": [
+        0.4261,
+        0.9931,
+        0.4191
+      ]
+    },
+    "prop_tent_gobelins": {
+      "file": "models/prop_tent_gobelins.json",
+      "kind": "prop",
+      "tris": 2899,
+      "bytes": 190522,
+      "nodes": [
+        "Flag",
+        "Glow"
+      ],
+      "bboxMin": [
+        -0.4396,
+        -0.0065,
+        -0.423
+      ],
+      "bboxMax": [
+        0.4189,
+        0.813,
+        0.4292
+      ]
+    }
+  },
+  "cover": "cover.jpg",
+  "coverSmall": "cover_small.jpg",
+  "coverPortrait": "cover_portrait.jpg"
+}

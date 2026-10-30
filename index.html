@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="fonts/fonts.css">
+<title>Runes de Commandement</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Wargame fantasy sur hexagones : programmez vos troupes avec des runes, puis regardez la bataille se jouer.">
+<meta name="theme-color" content="#120f0d">
+<link rel="icon" href="assets/ui/91d7007a7b4dfac3.svg">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/game.css">
+<link rel="stylesheet" href="css/editor.css">
+<link rel="modulepreload" href="vendor/three/build/three.module.js">
+<link rel="modulepreload" href="vendor/three/examples/jsm/controls/OrbitControls.js">
+<link rel="modulepreload" href="vendor/three/examples/jsm/loaders/GLTFLoader.js">
+<link rel="modulepreload" href="vendor/three/examples/jsm/utils/BufferGeometryUtils.js">
+<link rel="modulepreload" href="vendor/three/examples/jsm/postprocessing/Pass.js">
+<link rel="modulepreload" href="js/render/scene.js">
+<link rel="modulepreload" href="js/render/fx.js">
+<link rel="modulepreload" href="js/render/fallback.js">
+</head>
+<body>
+<div id="app">
+  <div id="view" aria-hidden="true"></div>
+  <div id="ui">
+    <div class="boot" id="boot">
+      <div class="boot-title">Runes de Commandement</div>
+      <div class="boot-sub">Chargement…</div>
+    </div>
+  </div>
+  <div id="overlay" aria-hidden="true"></div>
+  <div id="toasts" role="status" aria-live="polite"></div>
+</div>
+<noscript><p style="padding:24px;font-family:Georgia,serif;color:#efe4cc">Runes de Commandement nécessite JavaScript.</p></noscript>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

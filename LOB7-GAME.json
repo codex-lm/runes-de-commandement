@@ -1,0 +1,31 @@
+{
+  "title": "Runes de Commandement",
+  "description": "Wargame fantasy sur hexagones contre l’ordinateur : programmez vos troupes avec des blocs de runes, regardez la bataille se jouer seule, envoyez des corbeaux pour changer leurs ordres en pleine bataille, et menez une campagne roguelite.",
+  "entrypoint": "index.html",
+  "license": "MIT",
+  "genre": [
+    "strategy",
+    "wargame"
+  ],
+  "themes": [
+    "fantasy",
+    "hexagons",
+    "programming",
+    "roguelite"
+  ],
+  "controls": [
+    "Souris : sélectionner, déployer, programmer les runes et choisir sur la carte",
+    "Caméra : clic gauche glissé pour déplacer, clic droit glissé pour tourner, molette ou bouton central glissé pour zoomer",
+    "Caméra au clavier : flèches ou WASD (ZQSD sur AZERTY) pour déplacer ; R pour recadrer ou alterner vue globale/suivi en bataille",
+    "Bataille : Espace pause/reprise ; 1, 2, 3 pour les vitesses ×1, ×2, ×4",
+    "? ou F1 : aide ; Échap : fermer ou désélectionner",
+    "Éditeur : Ctrl/Cmd+Z annuler ; Alt+flèches haut/bas déplacer une règle ; Suppr/Retour arrière effacer une condition ciblée",
+    "Tactile : toucher pour sélectionner, un doigt glissé pour déplacer la caméra, deux doigts pour zoomer/tourner"
+  ],
+  "credits": [
+    "Conception, code et modèles 3D (Blender) : réalisés avec Claude (Anthropic) pour Cédric",
+    "three.js 0.170.0 — MIT License",
+    "Alegreya Sans, IM Fell English SC, Noto Sans Runic — SIL Open Font License 1.1"
+  ],
+  "cover": "assets/lob7-cover.jpg"
+}
