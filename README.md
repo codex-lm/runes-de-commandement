@@ -1,29 +1,29 @@
-# Runes de Commandement
+# Runes of Command
 
-Wargame fantasy solo sur hexagones. Déployez vos troupes, composez leurs ordres avec des runes, puis adaptez votre stratégie pendant la bataille grâce aux corbeaux messagers. La campagne suit une progression roguelite.
+A solo fantasy hex wargame. Deploy your troops, compose their orders with runes, then adapt your strategy during battle using messenger ravens. Lead your company through a roguelite campaign.
 
-Version 1.1.0 : musique enregistrée en boucle et bruit des effets corrigé.
+Version 1.2.0: English by default, with French available from the language selector. Your explicit language choice is remembered. The recorded soundtrack and audio fixes from 1.1.0 are included.
 
-![Capture réelle du jeu](assets/lob7-cover.jpg)
+![Actual gameplay](assets/lob7-cover.jpg)
 
-Code et modèles 3D originaux : MIT. La musique est exclue de MIT et les composants tiers conservent leurs licences, voir [NOTICE.md](NOTICE.md).
+Original code and 3D models: MIT. Music is excluded from MIT, and third-party components retain their own licences; see [NOTICE.md](NOTICE.md).
 
-## Jouer localement
+## Play locally
 
-Depuis ce dossier : `python -m http.server 8765 --bind 127.0.0.1`, puis ouvrir http://127.0.0.1:8765/ dans un navigateur récent avec WebGL. Aucune installation npm ni compilation n’est nécessaire. Les scripts, modèles et polices sont tous locaux. Le son démarre après un geste du joueur. La progression est sauvegardée dans le navigateur lorsque le stockage local est disponible.
+From this folder, run `python -m http.server 8765 --bind 127.0.0.1`, then open http://127.0.0.1:8765/ in a recent browser with WebGL. No npm installation or build step is needed. Scripts, models, fonts and music are local. Sound starts after a player gesture. Progress is saved in the browser when local storage is available. Switching languages does not change the save format or gameplay identifiers.
 
-## Commandes
+## Controls
 
-- Souris : sélectionner, déployer, programmer les runes et choisir sur la carte
-- Caméra : clic gauche glissé pour déplacer, clic droit glissé pour tourner, molette ou bouton central glissé pour zoomer
-- Caméra au clavier : flèches ou WASD (ZQSD sur AZERTY) pour déplacer ; R pour recadrer ou alterner vue globale/suivi en bataille
-- Bataille : Espace pause/reprise ; 1, 2, 3 pour les vitesses ×1, ×2, ×4
-- ? ou F1 : aide ; Échap : fermer ou désélectionner
-- Éditeur : Ctrl/Cmd+Z annuler ; Alt+flèches haut/bas déplacer une règle ; Suppr/Retour arrière effacer une condition ciblée
-- Tactile : toucher pour sélectionner, un doigt glissé pour déplacer la caméra, deux doigts pour zoomer/tourner
+- Mouse: select, deploy troops, program runes and choose the next campaign stop
+- Camera: left-drag to pan, right-drag to rotate, wheel or middle-drag to zoom
+- Keyboard camera: arrow keys or WASD (physical ZQSD on AZERTY); R to reframe or switch between overview and action tracking
+- Battle: Space to pause/resume; 1, 2, 3 for ×1, ×2, ×4 speed
+- ? or F1 for help; Escape to close or deselect
+- Editor: Ctrl/Cmd+Z to undo; Alt+Up/Down to move a rule; Delete/Backspace to remove the selected condition
+- Touch: tap to select, drag one finger to pan, use two fingers to zoom/rotate; select English or Français in the language menu
 
-Dans les menus de l’éditeur : Tab pour naviguer, flèches pour parcourir, Entrée ou Espace pour choisir, Début/Fin ou Page précédente/suivante pour atteindre les extrémités ; taper une lettre recherche une option. Sur la poignée d’une règle, les flèches haut/bas la déplacent ; Début/Fin l’envoient au début/à la fin. Pour une valeur numérique : flèches ±1, Page précédente/suivante ±5, Début/Fin minimum/maximum, Entrée pour fermer. Les boutons à l’écran donnent accès aux actions sans raccourci clavier.
+In editor menus: Tab to navigate, arrows to browse, Enter or Space to select, Home/End or Page Up/Down to reach the ends, and letters to search. On a rule handle, Up/Down moves the rule and Home/End sends it to the beginning/end. For numbers: arrows ±1, Page Up/Down ±5, Home/End for minimum/maximum, and Enter to close. On-screen buttons provide the same actions.
 
-## Crédits
+## Credits
 
-Conception, code et modèles Blender réalisés avec Claude (Anthropic) pour Cédric, selon le brief du projet. Adaptation et vérifications LOB7 : Nilo (Codex). three.js 0.170.0 et les polices sont détaillés dans [NOTICE.md](NOTICE.md).
+Design, code and Blender models were made with Claude (Anthropic) for Cédric, according to the project brief. English localisation and LOB7 adaptation: Nilo (Codex). See [NOTICE.md](NOTICE.md) for three.js 0.170.0, fonts and music.

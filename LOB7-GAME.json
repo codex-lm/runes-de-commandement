@@ -1,6 +1,6 @@
 {
-  "title": "Runes de Commandement",
-  "description": "Wargame fantasy sur hexagones contre l’ordinateur : programmez vos troupes avec des blocs de runes, regardez la bataille se jouer seule, envoyez des corbeaux pour changer leurs ordres en pleine bataille, et menez une campagne roguelite.",
+  "title": "Runes of Command",
+  "description": "A solo fantasy hex wargame. Program your troops with rune blocks, watch the battle unfold, and send messenger ravens to change their orders mid-fight. Lead your company through a roguelite campaign. English by default, with French available in the language menu.",
   "entrypoint": "index.html",
   "license": "MIT",
   "genre": [
@@ -14,19 +14,20 @@
     "roguelite"
   ],
   "controls": [
-    "Souris : sélectionner, déployer, programmer les runes et choisir sur la carte",
-    "Caméra : clic gauche glissé pour déplacer, clic droit glissé pour tourner, molette ou bouton central glissé pour zoomer",
-    "Caméra au clavier : flèches ou WASD (ZQSD sur AZERTY) pour déplacer ; R pour recadrer ou alterner vue globale/suivi en bataille",
-    "Bataille : Espace pause/reprise ; 1, 2, 3 pour les vitesses ×1, ×2, ×4",
-    "? ou F1 : aide ; Échap : fermer ou désélectionner",
-    "Éditeur : Ctrl/Cmd+Z annuler ; Alt+flèches haut/bas déplacer une règle ; Suppr/Retour arrière effacer une condition ciblée",
-    "Tactile : toucher pour sélectionner, un doigt glissé pour déplacer la caméra, deux doigts pour zoomer/tourner"
+    "Mouse: select, deploy troops, program runes and choose the next campaign stop",
+    "Camera: left-drag to pan, right-drag to rotate, wheel or middle-drag to zoom",
+    "Keyboard camera: arrow keys or WASD (physical ZQSD on AZERTY); R to reframe or switch between overview and action tracking",
+    "Battle: Space to pause/resume; 1, 2, 3 for ×1, ×2, ×4 speed",
+    "? or F1 for help; Escape to close or deselect",
+    "Editor: Ctrl/Cmd+Z to undo; Alt+Up/Down to move a rule; Delete/Backspace to remove the selected condition",
+    "Touch: tap to select, drag one finger to pan, use two fingers to zoom/rotate; select English or Français in the language menu"
   ],
   "credits": [
-    "Conception, code et modèles 3D (Blender) : réalisés avec Claude (Anthropic) pour Cédric",
+    "Design, code and Blender models: made with Claude (Anthropic) for Cédric",
     "three.js 0.170.0 — MIT License",
     "Alegreya Sans, IM Fell English SC, Noto Sans Runic — SIL Open Font License 1.1",
-    "Musique « Runes de Commandement - Theme » : générée avec Suno (compte de l’auteur), sous les conditions de Suno"
+    "Music: Runes de Commandement - Theme, generated with Suno on the author’s account, under Suno’s terms",
+    "English localisation and LOB7 adaptation: Nilo (Codex)"
   ],
   "cover": "assets/lob7-cover.jpg"
 }

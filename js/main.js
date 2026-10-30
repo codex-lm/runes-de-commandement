@@ -13,6 +13,7 @@
 // Pour les tests automatisés : window.__runes = { state, getRun, getBattle, view, go, autoDeploy, startBattle, setSpeed, finishBattleInstantly }.
 //   state.ready : interface ET vue 3D prêtes ; state.uiReady : interface seule (menus utilisables).
 
+import { installLocalization, getLanguage } from './i18n.js';
 import * as data from './core/data.js';
 import * as program from './core/program.js';
 import * as hex from './core/hex.js';
@@ -275,7 +276,7 @@ function errorToast(message) {
 /** Le fragment publié peut être placé tout entier dans <body> par l'hôte : on range ce qui relève de l'en-tête. */
 function adoptHead() {
   try {
-    document.documentElement.lang = 'fr';
+    document.documentElement.lang = getLanguage();
     for (const el of document.querySelectorAll('body > title, body link[rel~="icon"], body meta[name], body link[rel="preconnect"]')) document.head.append(el);
   } catch { /* */ }
 }
@@ -1399,6 +1400,7 @@ function exposeTestApi() {
   };
 }
 
+installLocalization();
 boot().catch((e) => {
   console.error(e);
   showFatal([{ k: 'main', p: './main.js', label: 'Démarrage du jeu', error: e }]);

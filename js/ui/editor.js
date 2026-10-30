@@ -20,10 +20,24 @@
 
 import { RUNES, UNITS, CLASSES, DEFAULT_PROGRAMS, RUNE_KIND_INFO, MAX_TICKS } from '../core/data.js';
 import {
-  programCost, ruleCost, validateProgram, paramOptions, paramBounds, resolveParams, makeCond, makeAction, textParts,
+  programCost, ruleCost, validateProgram, paramOptions, paramBounds, resolveParams, makeCond, makeAction, textParts as canonicalTextParts,
   describeRule, describeCond, describeAction, runeAllowedFor, isUnlocked, unitSlotsFor, cloneProgram, emptyProgram,
   MAX_RULES, MAX_CONDS_PER_RULE,
 } from '../core/program.js';
+import { translate } from '../i18n.js';
+
+function textParts(id, params, unitType) {
+  const original=canonicalTextParts(id,params,unitType);
+  const template=translate(RUNES[id]?.text ?? '?'), parts=[];
+  let last=0;
+  for(const m of template.matchAll(/\{(\w+)\}/g)){
+    if(m.index>last)parts.push({kind:'text',text:template.slice(last,m.index)});
+    parts.push(original.find(p=>p.kind==='param'&&p.key===m[1])??{kind:'text',text:'?'});
+    last=m.index+m[0].length;
+  }
+  if(last<template.length)parts.push({kind:'text',text:template.slice(last)});
+  return parts;
+}
 
 // ------------------------------------------------------------------ Constantes
 const NB = '\u00A0';
@@ -288,7 +302,7 @@ function buildBlock(ctx, item, ri, slot) {
     : h('span', { class: 'rn-glyph', 'aria-hidden': 'true' }, rune.glyph));
   const text = h('span', { class: 'rn-text' });
   parts.forEach((part, k) => {
-    if (part.kind === 'text') text.append(tidyText(part.text, parts[k - 1]?.kind === 'param', parts[k + 1]?.kind === 'param'));
+    if (part.kind === 'text') text.append(h('span', {'data-i18n-ignore':'true'}, tidyText(part.text, parts[k - 1]?.kind === 'param', parts[k + 1]?.kind === 'param')));
     else text.append(buildChip(ctx, item, ri, slot, part));
   });
   block.append(text);

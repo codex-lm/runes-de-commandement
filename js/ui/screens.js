@@ -8,6 +8,7 @@
 // { el, destroy(), ...méthodes de mise à jour }. Les handlers sont des callbacks (main.js possède l'état).
 import { UNITS, RUNES, TRAITS, TERRAIN, CAMPAIGN, SPELLS, MAX_RAVENS, DEFAULT_PROGRAMS, CLASSES } from '../core/data.js';
 import { programCost, unitSlotsFor, describeRule, runeAllowedFor, describeCond, describeAction } from '../core/program.js';
+import { translate } from '../i18n.js';
 
 /** Dépendances injectées par main.js : { editor, campaign, audio, assetsBase } (toutes optionnelles). */
 export const deps = { editor: null, campaign: null, audio: null, assetsBase: 'assets/' };
@@ -459,7 +460,7 @@ export function renderCampaign(root, { run, reachable = [] }, on) {
       if (isReach) { g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button'); g.setAttribute('aria-label', label); }
       g.innerHTML = `${isReach ? `<circle class="halo" r="${r + 16}"/>` : ''}<circle class="ring2" r="${r + 5}"/><circle class="disc" r="${r}"/>`
         + `<g class="ic" transform="translate(${-r * 0.62} ${-r * 0.62}) scale(${(r * 1.24) / 32})">${NODE_ICONS[n.kind]?.replace(/^<svg[^>]*>|<\/svg>$/g, '') ?? ''}</g>`
-        + `<text class="lbl" y="${r + 24}" text-anchor="middle">${wrapLabel(n.title || NODE_KIND[n.kind]?.name || '').map((ln, i) => `<tspan x="0" dy="${i ? '1.05em' : 0}">${escapeXml(ln)}</tspan>`).join('')}</text>`
+        + `<text data-i18n-ignore="true" class="lbl" y="${r + 24}" text-anchor="middle">${wrapLabel(n.title || NODE_KIND[n.kind]?.name || '').map((ln, i) => `<tspan x="0" dy="${i ? '1.05em' : 0}">${escapeXml(ln)}</tspan>`).join('')}</text>`
         + (isVisited && !isHere ? `<g class="stamp" transform="translate(${r * 0.62} ${-r * 0.6}) rotate(-14)"><circle r="13"/><path d="M-6 0l4 4.5 8-9"/></g>` : '')
         + (isHere ? `<g class="here" transform="translate(0 ${-r - 14})"><path d="M0 0v-26M0 -26c6 -3 10 3 16 0v10c-6 3 -10 -3 -16 0"/></g>` : '');
       const show = () => { hint.textContent = `${label}. ${NODE_KIND[n.kind]?.desc ?? ''}`; };
@@ -521,7 +522,7 @@ export function renderCampaign(root, { run, reachable = [] }, on) {
 }
 /** Coupe un intitulé de nœud en 1 ou 2 lignes équilibrées (≈ 15 caractères). */
 function wrapLabel(t) {
-  const s = String(t);
+  const s = translate(String(t));
   if (s.length <= 15) return [s];
   const words = s.split(' ');
   let best = [s], bestD = Infinity;
@@ -1081,7 +1082,7 @@ export function renderSettings(root, { settings }, on) {
     h('div', { class: 'set-rows' },
       h('div', { class: 'set-row' }, h('div', { class: 'set-lbl' }, h('b', { text: 'Qualité graphique' }), h('span', { text: 'Basse : ombres et effets allégés, pour les petites machines.' })),
         seg('quality', [['high', 'Haute'], ['low', 'Basse']], st.quality, (v) => { st.quality = v; emit(); })),
-      h('div', { class: 'set-row' }, h('div', { class: 'set-lbl' }, h('b', { text: 'Volume' }), h('span', { text: 'Sons synthétisés et vent sur la plaine.' })),
+      h('div', { class: 'set-row' }, h('div', { class: 'set-lbl' }, h('b', { text: 'Volume' }), h('span', { text: 'Musique et effets sonores synthétisés.' })),
         h('div', { class: 'vol' }, mute, vol, volOut)),
       h('div', { class: 'set-row' }, h('div', { class: 'set-lbl' }, h('b', { text: 'Vitesse de bataille' }), h('span', { text: 'Vitesse au début de chaque bataille.' })),
         seg('speed', [[1, '1×'], [2, '2×'], [4, '4×']], st.speed, (v) => { st.speed = v; emit(); }))),

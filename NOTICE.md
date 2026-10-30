@@ -22,6 +22,6 @@ All three font families use the SIL Open Font License 1.1. Their license texts i
 
 assets/music/theme.mp3, “Runes de Commandement - Theme”, was generated with Suno for the author, according to the supplied project brief. It is not licensed under MIT. The repository's MIT license grants no permission to reuse or redistribute this MP3; verify the author's applicable rights and Suno terms before doing so.
 
-Code et modèles 3D originaux : MIT. three.js et polices : voir NOTICE.md. Le fichier assets/music/theme.mp3 (« Runes de Commandement - Theme »), généré avec Suno pour l’auteur, est exclu de la licence MIT. Sa réutilisation ou redistribution exige de vérifier les droits applicables et les conditions Suno de l’auteur ; aucune autorisation sur ce MP3 n’est accordée par la licence MIT du dépôt.
+Original code and 3D models: MIT. For three.js and fonts, see NOTICE.md. The music file assets/music/theme.mp3 (Runes de Commandement - Theme), generated with Suno for the author, is excluded from MIT. Reuse or redistribution requires checking the applicable rights and the author’s Suno terms; the repository’s MIT license grants no permission for this MP3.
 
 Suno terms: https://suno.com/terms
