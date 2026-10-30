@@ -25,7 +25,8 @@
   "credits": [
     "Conception, code et modèles 3D (Blender) : réalisés avec Claude (Anthropic) pour Cédric",
     "three.js 0.170.0 — MIT License",
-    "Alegreya Sans, IM Fell English SC, Noto Sans Runic — SIL Open Font License 1.1"
+    "Alegreya Sans, IM Fell English SC, Noto Sans Runic — SIL Open Font License 1.1",
+    "Musique « Runes de Commandement - Theme » : générée avec Suno (compte de l’auteur), sous les conditions de Suno"
   ],
   "cover": "assets/lob7-cover.jpg"
 }

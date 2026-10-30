@@ -2,9 +2,11 @@
 
 Wargame fantasy solo sur hexagones. Déployez vos troupes, composez leurs ordres avec des runes, puis adaptez votre stratégie pendant la bataille grâce aux corbeaux messagers. La campagne suit une progression roguelite.
 
+Version 1.1.0 : musique enregistrée en boucle et bruit des effets corrigé.
+
 ![Capture réelle du jeu](assets/lob7-cover.jpg)
 
-Licence du jeu : MIT. Les composants tiers conservent leurs licences, voir [NOTICE.md](NOTICE.md).
+Code et modèles 3D originaux : MIT. La musique est exclue de MIT et les composants tiers conservent leurs licences, voir [NOTICE.md](NOTICE.md).
 
 ## Jouer localement
 

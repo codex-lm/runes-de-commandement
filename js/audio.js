@@ -7,7 +7,7 @@
 //   play(name, { delay, gain })      — name ∈ SOUNDS (ui, hover, rune, clash, whoosh, boom, heal, caw, shot, victory, defeat, coin, page, deny)
 //   playBattleEvents(events, durMs)  — sons d'un TickReport, regroupés et étalés dans la durée de l'animation
 //   setVolume(0..1), getVolume(), setMuted(bool), isMuted()
-//   startAmbient(), stopAmbient(), setAmbientIntensity(0..1)
+//   startAmbient(), stopAmbient(), setAmbientIntensity(0..1)   — fond musical : morceau Suno en boucle (repli : accords lents + notes éparses), sans bruit
 
 let ctx = null;
 let master = null, sfx = null, amb = null, comp = null;
@@ -35,11 +35,18 @@ function ensureContext() {
   sfx = ctx.createGain(); sfx.gain.value = 0.9;
   amb = ctx.createGain(); amb.gain.value = 0.0;
   sfx.connect(comp); amb.connect(comp); comp.connect(master); master.connect(ctx.destination);
-  // 2 s de bruit blanc, réutilisé par tous les sons bruités.
-  noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+  // 4 s de bruit blanc, réutilisé par tous les sons bruités et par le vent. Générateur mulberry32 : l'ancienne congruence
+  // linéaire calculée en flottants perdait ses bits de poids faible et bouclait sur 419 échantillons, soit un bourdon
+  // d'environ 115 Hz (hauteur d'une voix grave) que le filtre du vent transformait en voix de talkie-walkie.
+  noiseBuf = ctx.createBuffer(1, Math.round(ctx.sampleRate * 4), ctx.sampleRate);
   const d = noiseBuf.getChannelData(0);
-  let seed = 1234567;
-  for (let i = 0; i < d.length; i++) { seed = (seed * 1103515245 + 12345) >>> 0; d[i] = (seed / 4294967296) * 2 - 1; }
+  let seed = 0x9e3779b9;
+  for (let i = 0; i < d.length; i++) {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    d[i] = (((t ^ (t >>> 14)) >>> 0) / 4294967296) * 2 - 1;
+  }
   return ctx;
 }
 
@@ -240,43 +247,151 @@ export function playBattleEvents(events, durationMs = 700) {
   }
 }
 
-// ------------------------------------------------------------------ ambiance : vent + bourdon doux
+// ------------------------------------------------------------------ ambiance : nappe d'accords lente + notes éparses
+// Accords en ré mineur (i, VI, III, VII) tuilés les uns sur les autres, et quelques notes de pentatonique jouées comme
+// des cordes pincées, dans un écho doux. Volontairement sans aucun bruit : un souffle qui gonfle puis s'efface en boucle
+// s'entendait comme des parasites de radio.
+const mtof = (m) => 440 * Math.pow(2, (m - 69) / 12);
+const CHORDS = [
+  [38, 45, 53, 57, 60],   // Ré mineur
+  [34, 46, 53, 58, 62],   // Si♭ majeur
+  [41, 48, 53, 57, 60],   // Fa majeur
+  [36, 43, 52, 55, 60],   // Do majeur
+];
+const CHORD_LEN = 14, CHORD_ATTACK = 4.5, CHORD_RELEASE = 5.5, LOOKAHEAD = 8;
+const PENTA = [69, 72, 74, 77, 79, 81];   // la do ré fa sol la
+let ambientBus = null, ambientTimer = 0, ambientChord = 0, nextChordAt = 0, nextNoteAt = 0;
+
+function ambientTrack(n, end) { ambientNodes.push({ n, end }); }
+
+function playChord(notes, t0) {
+  const end = t0 + CHORD_LEN + CHORD_RELEASE + 0.1;
+  const cg = ctx.createGain();
+  cg.gain.setValueAtTime(0.0001, t0);
+  cg.gain.linearRampToValueAtTime(1, t0 + CHORD_ATTACK);
+  cg.gain.setValueAtTime(1, t0 + CHORD_LEN);
+  cg.gain.linearRampToValueAtTime(0.0001, t0 + CHORD_LEN + CHORD_RELEASE);
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.Q.value = 0.4;
+  lp.connect(cg); cg.connect(ambientBus);
+  notes.forEach((m, i) => {
+    for (const det of [-6, 6]) {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = m < 50 ? 'triangle' : 'sine';
+      o.frequency.value = mtof(m); o.detune.value = det + (i - 2) * 1.5;
+      g.gain.value = m < 50 ? 0.034 : 0.02;
+      o.connect(g); g.connect(lp); o.start(t0); o.stop(end);
+      ambientTrack(o, end);
+    }
+  });
+}
+
+function playPluck(t, m) {
+  const f = mtof(m), end = t + 4;
+  const out = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+  if (out) { out.pan.value = (Math.random() * 2 - 1) * 0.5; out.connect(ambientBus); }
+  const dest = out ?? ambientBus;
+  for (const [mul, peak, dec] of [[1, 0.075, 3.2], [2, 0.014, 1.2], [3, 0.005, 0.6]]) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'sine'; o.frequency.value = f * mul;
+    env(g, t, 0.012, peak, dec);
+    o.connect(g); g.connect(dest); o.start(t); o.stop(end);
+    ambientTrack(o, end);
+  }
+}
+
+// ---- morceau enregistré (Suno, assets/music/theme.mp3) : lu en boucle, la fin se fondant dans le début. Si le fichier
+// manque ou ne se décode pas, la nappe synthétique ci-dessus prend le relais.
+const MUSIC_URL = 'assets/music/theme.mp3';
+const MUSIC_XFADE = 6;     // s : la fin du morceau (déjà en fondu) et son début se chevauchent, sans coupure à la boucle
+const MUSIC_TRIM = 0.7;    // morceau mixé fort (RMS ≈ 0,13) : calé pour rester un fond (≈ 0,05 en sortie, ×0,45 en bataille)
+const MUSIC_RATE = 32000;  // décodé à 32 kHz (le MP3 coupe vers 16 kHz) : 51 Mo de mémoire au lieu de 77
+const fadeCurve = (f) => Float32Array.from({ length: 64 }, (_, i) => f((i / 63) * Math.PI / 2));
+const FADE_IN = fadeCurve(Math.sin), FADE_OUT = fadeCurve(Math.cos);   // puissance constante
+let musicBuf = null, musicState = 0, musicNextAt = 0, musicStarted = false, musicTrim = null;
+// musicState : 0 pas demandé, 1 en chargement, 2 prêt, 3 indisponible
+
+function loadMusic() {
+  if (musicState) return;
+  musicState = 1;
+  const c = ctx;
+  const decode = async (bytes) => {
+    try { return await new OfflineAudioContext(2, 1, MUSIC_RATE).decodeAudioData(bytes.slice(0)); }
+    catch { return c.decodeAudioData(bytes); }
+  };
+  fetch(MUSIC_URL)
+    .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.arrayBuffer(); })
+    .then(decode)
+    .then((buf) => { musicBuf = buf; musicState = 2; if (ctx === c && ambientNodes) musicNextAt = c.currentTime + 0.1; })
+    .catch(() => {
+      musicState = 3;
+      if (ctx === c && ambientNodes) { nextChordAt = c.currentTime + 0.1; nextNoteAt = c.currentTime + 6; }
+    });
+}
+
+function playMusic(t, first) {
+  const d = musicBuf.duration, x = Math.min(MUSIC_XFADE, d / 4);
+  const src = ctx.createBufferSource(); src.buffer = musicBuf;
+  const g = ctx.createGain(); g.gain.value = 0;
+  g.gain.setValueCurveAtTime(FADE_IN, t, first ? 3 : x);
+  g.gain.setValueCurveAtTime(FADE_OUT, t + d - x, x);
+  src.connect(g); g.connect(musicTrim);
+  src.start(t); src.stop(t + d + 0.1);
+  ambientTrack(src, t + d + 0.1);
+}
+
+// Planifie à l'avance (LOOKAHEAD s) : morceau, accords et notes sont posés sur l'horloge audio, le minuteur ne sert
+// qu'à remplir la file, donc un onglet ralenti ne fait pas de trou.
+function tickAmbient() {
+  if (!ctx || !ambientNodes) return;
+  const now = ctx.currentTime;
+  if (musicState === 2) {
+    while (musicNextAt < now + LOOKAHEAD) {
+      // la boucle suivante se cale sur l'heure RÉELLE de départ de celle-ci (le minuteur peut avoir pris du retard)
+      const t = Math.max(musicNextAt, now);
+      playMusic(t, !musicStarted);
+      musicStarted = true;
+      musicNextAt = t + musicBuf.duration - Math.min(MUSIC_XFADE, musicBuf.duration / 4);
+    }
+  } else if (musicState === 3) {
+    while (nextChordAt < now + LOOKAHEAD) {
+      playChord(CHORDS[ambientChord++ % CHORDS.length], nextChordAt);
+      nextChordAt += CHORD_LEN;
+    }
+    while (nextNoteAt < now + LOOKAHEAD) {
+      const i = Math.floor(Math.random() * PENTA.length);
+      playPluck(nextNoteAt, PENTA[i]);
+      if (Math.random() < 0.3) playPluck(nextNoteAt + 0.55, PENTA[Math.max(0, Math.min(PENTA.length - 1, i + (Math.random() < 0.5 ? -1 : 1)))]);
+      nextNoteAt += 5 + Math.random() * 7;
+    }
+  }
+  ambientNodes = ambientNodes.filter((x) => x.end > now);
+  ambientTimer = setTimeout(tickAmbient, 2000);
+}
+
 function buildAmbient() {
   if (!ctx || ambientNodes) return;
   const t = ctx.currentTime;
-  const nodes = [];
-  // vent : bruit filtré dont la fréquence et le volume ondulent lentement
-  const src = ctx.createBufferSource(); src.buffer = noiseBuf; src.loop = true;
-  const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 420; bp.Q.value = 0.6;
-  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1400;
-  const wg = ctx.createGain(); wg.gain.value = 0.10;
-  const lfo1 = ctx.createOscillator(); lfo1.frequency.value = 0.07;
-  const lfo1g = ctx.createGain(); lfo1g.gain.value = 260;
-  const lfo2 = ctx.createOscillator(); lfo2.frequency.value = 0.11;
-  const lfo2g = ctx.createGain(); lfo2g.gain.value = 0.05;
-  lfo1.connect(lfo1g); lfo1g.connect(bp.frequency);
-  lfo2.connect(lfo2g); lfo2g.connect(wg.gain);
-  src.connect(bp); bp.connect(lp); lp.connect(wg); wg.connect(amb);
-  src.start(t); lfo1.start(t); lfo2.start(t);
-  nodes.push(src, lfo1, lfo2);
-  // bourdon : quinte grave, légèrement désaccordée, très filtrée
-  const dl = ctx.createBiquadFilter(); dl.type = 'lowpass'; dl.frequency.value = 320;
-  const dg = ctx.createGain(); dg.gain.value = 0.05;
-  for (const [f, det] of [[55, -4], [82.4, 3], [110, 6]]) {
-    const o = ctx.createOscillator(); o.type = 'triangle'; o.frequency.value = f; o.detune.value = det;
-    o.connect(dl); o.start(t); nodes.push(o);
-  }
-  const trem = ctx.createOscillator(); trem.frequency.value = 0.05;
-  const tremg = ctx.createGain(); tremg.gain.value = 0.02;
-  trem.connect(tremg); tremg.connect(dg.gain); trem.start(t); nodes.push(trem);
-  dl.connect(dg); dg.connect(amb);
-  ambientNodes = nodes;
+  ambientNodes = [];
+  // bus commun + écho doux pour la nappe de repli (retard filtré qui se répète en s'éteignant)
+  const bus = ctx.createGain();
+  const dl = ctx.createDelay(1.5); dl.delayTime.value = 0.43;
+  const fl = ctx.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = 1500;
+  const fb = ctx.createGain(); fb.gain.value = 0.38;
+  const wet = ctx.createGain(); wet.gain.value = 0.4;
+  bus.connect(amb); bus.connect(dl); dl.connect(fl); fl.connect(fb); fb.connect(dl); fl.connect(wet); wet.connect(amb);
+  ambientBus = bus;
+  musicTrim = ctx.createGain(); musicTrim.gain.value = MUSIC_TRIM; musicTrim.connect(amb);
+  ambientChord = 0; nextChordAt = t + 0.1; nextNoteAt = t + 6;
+  musicStarted = false;
+  if (musicState === 0) loadMusic();
+  else if (musicState === 2) musicNextAt = t + 0.1;
+  tickAmbient();
   amb.gain.cancelScheduledValues(t);
   amb.gain.setValueAtTime(amb.gain.value, t);
   amb.gain.linearRampToValueAtTime(0.55, t + 3);
 }
 
-/** Lance le fond sonore (vent + bourdon). Effectif au premier geste si le contexte n'existe pas encore. */
+/** Lance le fond sonore (morceau en boucle, ou nappe synthétique si le fichier manque). Effectif au premier geste si le contexte n'existe pas encore. */
 export function startAmbient() {
   wantAmbient = true;
   if (ctx && ctx.state === 'running') buildAmbient();
@@ -286,10 +401,13 @@ export function startAmbient() {
 export function stopAmbient() {
   wantAmbient = false;
   if (!ctx || !ambientNodes) return;
-  const t = ctx.currentTime;
-  amb.gain.setTargetAtTime(0.0001, t, 0.5);
-  const nodes = ambientNodes; ambientNodes = null;
-  setTimeout(() => { for (const n of nodes) { try { n.stop(); } catch { /* déjà arrêté */ } } }, 2500);
+  clearTimeout(ambientTimer); ambientTimer = 0;
+  amb.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.5);
+  const nodes = ambientNodes, bus = ambientBus, trim = musicTrim; ambientNodes = null; ambientBus = null; musicTrim = null;
+  setTimeout(() => {
+    for (const { n } of nodes) { try { n.stop(); } catch { /* déjà arrêté */ } }
+    try { bus?.disconnect(); trim?.disconnect(); } catch { /* déjà déconnecté */ }
+  }, 2500);
 }
 /** Intensité du fond sonore (0..1), ex. plus présent sur la carte de campagne, plus discret en bataille. */
 export function setAmbientIntensity(x) {

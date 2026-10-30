@@ -17,3 +17,11 @@ The original WOFF2 font files are included without modification. Only CSS URLs a
 - Noto Sans Runic: [OFL](fonts/licenses/notosansrunic-OFL.txt), https://github.com/google/fonts/tree/main/ofl/notosansrunic
 
 All three font families use the SIL Open Font License 1.1. Their license texts include the respective copyright notices and reserved names. These licenses remain separate from the game license.
+
+## Recorded music — excluded from MIT
+
+assets/music/theme.mp3, “Runes de Commandement - Theme”, was generated with Suno for the author, according to the supplied project brief. It is not licensed under MIT. The repository's MIT license grants no permission to reuse or redistribute this MP3; verify the author's applicable rights and Suno terms before doing so.
+
+Code et modèles 3D originaux : MIT. three.js et polices : voir NOTICE.md. Le fichier assets/music/theme.mp3 (« Runes de Commandement - Theme »), généré avec Suno pour l’auteur, est exclu de la licence MIT. Sa réutilisation ou redistribution exige de vérifier les droits applicables et les conditions Suno de l’auteur ; aucune autorisation sur ce MP3 n’est accordée par la licence MIT du dépôt.
+
+Suno terms: https://suno.com/terms
